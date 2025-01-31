@@ -3,7 +3,6 @@ import '@styles/globals.css';
 import localFont from 'next/font/local';
 import ToastContainerWrapper from '../_components/molecules/m-toast-wrapper';
 import Navbar from '../_components/molecules/m-navbar';
-import Footer from '../_components/molecules/m-footer';
 
 /**
  * Documentaion for the entry layout
@@ -76,7 +75,6 @@ function Layout({ children }: { children: React.ReactNode }) {
           <ToastContainerWrapper />
           <Navbar />
           <div>{children}</div>
-          <Footer />
         </body>
       </Providers>
     </html>
