@@ -7,7 +7,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const ActivityTracker = () => {
   const [selectedPoint, setSelectedPoint] = useState(8);
-  const [selectedDates, setSelectedDates] = useState<string[]>([]); // Add this for multi-select
+  const [selectedDates, setSelectedDates] = useState<string[]>([]); 
 
   // Generate dummy data for a month
   const generateDummyData = (startDate: Date) => {
