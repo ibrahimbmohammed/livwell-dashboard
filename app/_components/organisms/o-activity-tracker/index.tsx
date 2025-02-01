@@ -1,13 +1,14 @@
 
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AreaChart, Area, ResponsiveContainer } from 'recharts';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import LoadingScreen from '@/app/_components/atoms/a-Spinner';
 
 const ActivityTracker = () => {
   const [selectedPoint, setSelectedPoint] = useState(8);
-  const [selectedDates, setSelectedDates] = useState<string[]>([]); 
+  const [selectedDates, setSelectedDates] = useState<string[]>([]);
 
   // Generate dummy data for a month
   const generateDummyData = (startDate: Date) => {
@@ -36,9 +37,27 @@ const ActivityTracker = () => {
   };
 
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [activityData] = useState(() => generateDummyData(new Date()));
+  //const [activityData] = useState(() => generateDummyData(new Date()));
+  const [activityData, setActivityData] = useState<any>({}); // Add proper typing
+  const [isLoading, setIsLoading] = useState(true);
 
   const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true);
+      try {
+        const response = await fetch(`/api/activity?date=${selectedDate.toISOString()}`);
+        const data = await response.json();
+        setActivityData(data);
+      } catch (error) {
+        console.error('Error fetching activity data:', error);
+      }
+      setIsLoading(false);
+    };
+
+    fetchData();
+  }, []); // Only fetch on initial load
 
   const getWeekDates = (date: Date) => {
     const dayOfWeek = date.getDay();
@@ -103,6 +122,13 @@ const ActivityTracker = () => {
     return !!activityData[dateKey];
   };
 
+  if (isLoading) {
+    return (
+      <div className="w-full 1xl:w-[20rem] 2xl:w-[calc(20rem*1.2)] 3xl:w-[calc(20rem*1.25)] 3xl:h-[calc(18.12rem*1.2)] h-[19rem] flex flex-col z-30 justify-between">
+        <LoadingScreen className="" />
+      </div>
+    );
+  }
   return (
     <div className="w-full 1xl:w-[20rem] 2xl:w-[calc(20rem*1.2)] 3xl:w-[calc(20rem*1.25)] 3xl:h-[calc(18.12rem*1.2)] h-[19rem] flex flex-col z-30 justify-between">
       <div className="pb-2">
