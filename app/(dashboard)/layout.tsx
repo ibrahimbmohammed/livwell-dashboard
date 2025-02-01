@@ -79,7 +79,7 @@ function Layout({ children }: { children: React.ReactNode }) {
         <body className={`${museo.variable} font-sans`}>
           <DashboardLayout>
             <ToastContainerWrapper />
-            <Image src={overlay?.src} alt="Background" fill priority className="object-cover opacity-100 " />
+            <Image src={overlay?.src} alt="Background" fill priority className="object-cover opacity-100 -z-0" />
             <div className="">{children}</div>
           </DashboardLayout>
         </body>

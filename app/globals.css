@@ -45,11 +45,6 @@ input:-webkit-autofill:active{
   }
 }
 
-@media (min-width: 1700px) {
-  :root {
-    --scale-factor: calc(100vw / 1700);
-  }
-}
 
  select {
     -moz-appearance:none !important; /* Firefox */
