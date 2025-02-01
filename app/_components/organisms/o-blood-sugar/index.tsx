@@ -19,7 +19,7 @@ const BloodTracker: React.FC = () => {
 
   if (isLoading) {
     return (
-      <div className="flex w-full flex-col items-start justify-between rounded-[10px] 1xl:w-[11.7rem] 3xl:w-[calc(11.7rem*1.2)] 3xl:h-[calc(14.8rem*1.2)] h-[14.8rem] px-4 py-4 bg-[#252525]">
+      <div className="flex w-full flex-col items-center justify-center  rounded-[10px] 1xl:w-[11.7rem] 3xl:w-[calc(11.7rem*1.2)] 3xl:h-[calc(14.8rem*1.2)] h-[14.8rem] px-4 py-4 bg-[#252525]">
         <LoadingScreen />
       </div>
     );
@@ -27,8 +27,8 @@ const BloodTracker: React.FC = () => {
 
   if (error) {
     return (
-      <div className="flex w-full flex-col items-start justify-between rounded-[10px] 1xl:w-[11.7rem] 3xl:w-[calc(11.7rem*1.2)] 3xl:h-[calc(14.8rem*1.2)] h-[14.8rem] px-4 py-4 bg-[#252525]">
-        <div className="text-red-400">Sorry, an error occurred!</div>
+      <div className="flex w-full  items-center justify-center rounded-[10px] 1xl:w-[11.7rem] 3xl:w-[calc(11.7rem*1.2)] 3xl:h-[calc(14.8rem*1.2)] h-[14.8rem] px-4 py-4 bg-[#252525]">
+        <div className="text-red-400 text-center">Sorry, an error occurred!</div>
       </div>
     );
   }

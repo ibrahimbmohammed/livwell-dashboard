@@ -12,8 +12,7 @@
 :root {
  width: 100%; 
   --scale-factor: 1;
-  --color-primaryColor: #175CFF;
-  --color-primaryBlueColor: #175CFF;
+  --color-primaryColor: #1B1B1B;
   --color-secondaryColor: #1F2F5E;
   --color-backgroundColor: #EFF3FA;
 }
