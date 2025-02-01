@@ -1,16 +1,24 @@
 'use client';
 
 import React from 'react';
-import { BarChart, Bar, ResponsiveContainer, Cell, XAxis, YAxis } from 'recharts';
+import { BarChart, Bar, ResponsiveContainer, XAxis, YAxis } from 'recharts';
 import InventoryIcon from '@/app/_lib/icons/dashboard/sidebar/People';
+import useFetchQuery from '@/app/_lib/hooks/use-fetch-query';
+import LoadingScreen from '@/app/_components/atoms/a-Spinner';
 
-interface TotalTimeTrackerProps {
+interface TimeTrackingData {
+  totalTime: string;
+  weeklyData: {
+    day: string;
+    value: number;
+  }[];
+}
+
+const TotalTimeTracker: React.FC<{
   title: string;
   time: string;
   data: { day: string; value: number }[];
-}
-
-const TotalTimeTracker: React.FC<TotalTimeTrackerProps> = ({ title, time, data }) => {
+}> = ({ title, time, data }) => {
   const COLORS = {
     background: '#374151', // Dark gray for background bars
     foreground: '#93C5FD', // Light blue for active bars
@@ -53,17 +61,29 @@ const TotalTimeTracker: React.FC<TotalTimeTrackerProps> = ({ title, time, data }
 };
 
 const TotalTimeTrackerCard = () => {
-  const weeklyData = [
-    { day: 'Mon', value: 75 },
-    { day: 'Tue', value: 40 },
-    { day: 'Wed', value: 35 },
-    { day: 'Thu', value: 60 },
-    { day: 'Fri', value: 50 },
-    { day: 'Sat', value: 70 },
-    { day: 'Sun', value: 80 },
-  ];
+  const { data, error, isLoading } = useFetchQuery<TimeTrackingData>('/api/time-tracking');
 
-  return <TotalTimeTracker title="Total Time" time="2h 25m" data={weeklyData} />;
+  if (isLoading) {
+    return (
+      <div className="w-full 1xl:w-[22.7rem] 2xl:w-[calc(22.7rem*1.2)] 3xl:w-[calc(22.7rem*1.25)] 3xl:h-[calc(18.12rem*1.2)] h-[18.12rem] rounded-[10px] bg-[#252525] px-5 py-5 text-white flex items-center justify-center">
+        <LoadingScreen />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="w-full 1xl:w-[22.7rem] 2xl:w-[calc(22.7rem*1.2)] 3xl:w-[calc(22.7rem*1.25)] 3xl:h-[calc(18.12rem*1.2)] h-[18.12rem] rounded-[10px] bg-[#252525] px-5 py-5 text-white flex items-center justify-center">
+        <div className="text-red-400">Sorry, an error occurred!</div>
+      </div>
+    );
+  }
+
+  if (!data) {
+    return null;
+  }
+
+  return <TotalTimeTracker title="Total Time" time={data.totalTime} data={data.weeklyData} />;
 };
 
 export default TotalTimeTrackerCard;

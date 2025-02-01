@@ -3,14 +3,16 @@
 import TimeHourGlassIcon from '@/app/_lib/icons/dashboard/time';
 import React from 'react';
 import { BarChart, Bar, ResponsiveContainer, Cell } from 'recharts';
+import useFetchQuery from '@/app/_lib/hooks/use-fetch-query';
+import LoadingScreen from '@/app/_components/atoms/a-Spinner';
 
-interface VelocityTrackerProps {
-  title: string; // Title of the card
-  value: string; // Value to display (e.g., "10 Km")
-  data: { value: number; index: number }[]; // Chart data
+interface VelocityData {
+  title: string;
+  value: string;
+  data: { value: number; index: number }[];
 }
 
-const VelocityTracker: React.FC<VelocityTrackerProps> = ({ title, value, data }) => {
+const VelocityTracker: React.FC<VelocityData> = ({ title, value, data }) => {
   const COLORS = ['#484848', '#FBD7BA']; // Gradient colors: dark gray and light pink
 
   return (
@@ -42,17 +44,30 @@ const VelocityTracker: React.FC<VelocityTrackerProps> = ({ title, value, data })
   );
 };
 
-export default function VelocityTrackerCard() {
-  const chartData = [
-    { value: 3, index: 0 },
-    { value: 4, index: 1 },
-    { value: 5, index: 2 },
-    { value: 6, index: 3 },
-    { value: 7, index: 4 },
-    { value: 8, index: 5 },
-    { value: 9, index: 6 },
-    { value: 10, index: 7 },
-  ];
+const VelocityTrackerCard = () => {
+  const { data, error, isLoading } = useFetchQuery<VelocityData>('/api/velocity');
 
-  return <VelocityTracker title="Average Speed" value="10 Km" data={chartData} />;
-}
+  if (isLoading) {
+    return (
+      <div className="w-full 1xl:w-[12.5rem] 2xl:w-[calc(12.5rem*1.2)] 3xl:w-[calc(12.5rem*1.25)] 3xl:h-[calc(18.12rem*1.2)] h-[18.12rem] rounded-[10px] bg-[#252525] px-5 py-5 text-white flex items-center justify-center">
+        <LoadingScreen />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="w-full 1xl:w-[12.5rem] 2xl:w-[calc(12.5rem*1.2)] 3xl:w-[calc(12.5rem*1.25)] 3xl:h-[calc(18.12rem*1.2)] h-[18.12rem] rounded-[10px] bg-[#252525] px-5 py-5 text-white flex items-center justify-center">
+        <div className="text-red-400">Sorry, an error occurred!</div>
+      </div>
+    );
+  }
+
+  if (!data) {
+    return null;
+  }
+
+  return <VelocityTracker title={data.title} value={data.value} data={data.data} />;
+};
+
+export default VelocityTrackerCard;

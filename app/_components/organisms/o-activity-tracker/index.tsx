@@ -1,63 +1,38 @@
 
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { AreaChart, Area, ResponsiveContainer } from 'recharts';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import LoadingScreen from '@/app/_components/atoms/a-Spinner';
+import useFetchQuery from '@/app/_lib/hooks/use-fetch-query';
+
+interface ActivityPoint {
+  value: number;
+  index: number;
+}
+
+interface DayData {
+  done: string;
+  left: string;
+  activity: ActivityPoint[];
+}
+
+interface ActivityData {
+  [key: string]: DayData;
+}
 
 const ActivityTracker = () => {
   const [selectedPoint, setSelectedPoint] = useState(8);
   const [selectedDates, setSelectedDates] = useState<string[]>([]);
-
-  // Generate dummy data for a month
-  const generateDummyData = (startDate: Date) => {
-    const data: {
-      [key: string]: {
-        done: string;
-        left: string;
-        activity: { value: number; index: number }[];
-      };
-    } = {};
-    for (let i = -15; i <= 15; i++) {
-      const date = new Date(startDate);
-      date.setDate(startDate.getDate() + i);
-      const dateKey = date.toISOString().split('T')[0];
-      const activityPoints = Array.from({ length: 15 }, (_, index) => ({
-        value: Math.random() * 50 + 10,
-        index,
-      }));
-      data[dateKey] = {
-        done: (-Math.random() * 8 - 2).toFixed(1),
-        left: (Math.random() * 6 + 2).toFixed(1),
-        activity: activityPoints,
-      };
-    }
-    return data;
-  };
-
   const [selectedDate, setSelectedDate] = useState(new Date());
-  //const [activityData] = useState(() => generateDummyData(new Date()));
-  const [activityData, setActivityData] = useState<any>({}); // Add proper typing
-  const [isLoading, setIsLoading] = useState(true);
+  const {
+    data: activityData,
+    error,
+    isLoading,
+  } = useFetchQuery<ActivityData>(`/api/activity?date=${selectedDate.toISOString()}`);
 
   const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-
-  useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
-      try {
-        const response = await fetch(`/api/activity?date=${selectedDate.toISOString()}`);
-        const data = await response.json();
-        setActivityData(data);
-      } catch (error) {
-        console.error('Error fetching activity data:', error);
-      }
-      setIsLoading(false);
-    };
-
-    fetchData();
-  }, []); // Only fetch on initial load
 
   const getWeekDates = (date: Date) => {
     const dayOfWeek = date.getDay();
@@ -81,7 +56,7 @@ const ActivityTracker = () => {
   };
 
   const selectedDateKey = selectedDate.toISOString().split('T')[0];
-  const currentDayData = activityData[selectedDateKey] || {
+  const currentDayData = activityData?.[selectedDateKey] || {
     done: '-5.6',
     left: '4.4',
     activity: Array(15).fill({ value: 30, index: -1 }),
@@ -119,13 +94,22 @@ const ActivityTracker = () => {
   // Helper function to check if date has data
   const hasData = (date: Date) => {
     const dateKey = date.toISOString().split('T')[0];
-    return !!activityData[dateKey];
+    return !!activityData && !!activityData[dateKey];
   };
 
-  if (isLoading) {
+  if (isLoading && !activityData) {
     return (
       <div className="w-full 1xl:w-[20rem] 2xl:w-[calc(20rem*1.2)] 3xl:w-[calc(20rem*1.25)] 3xl:h-[calc(18.12rem*1.2)] h-[19rem] flex flex-col z-30 justify-between">
         <LoadingScreen className="" />
+      </div>
+    );
+  }
+  if (error) {
+    return (
+      <div className="w-full 1xl:w-[20rem] 2xl:w-[calc(20rem*1.2)] 3xl:w-[calc(20rem*1.25)] 3xl:h-[calc(18.12rem*1.2)] h-[19rem] flex flex-col z-30 justify-between">
+        <div className="h-full flex items-center justify-center">
+          <p className="text-red-400">Sorry an error occurred!</p>
+        </div>
       </div>
     );
   }
@@ -171,7 +155,7 @@ const ActivityTracker = () => {
                 className={`text-center cursor-pointer ${hasDataForDate ? 'hover:opacity-80' : 'opacity-50'}`}>
                 <div className="text-[11px] 3xl:text-[calc(11px*1.2)] text-[#8EA1B3] font-[300] mb-1">{day}</div>
                 <div
-                  className={`text-[14px] 3xl:text-[calc(14px*1.2)] transition-all flex items-center justify-center mx-auto w-6 h-6 ${
+                  className={`text-[14px] 3xl:text-[calc(14px*1.2)] transition-all flex items-center justify-center mx-auto w-6 h-6 3xl:w-[calc(24px*1.2)] 3xl:h-[calc(24px*1.2)] ${
                     isCurrentDay
                       ? 'bg-white text-black rounded-full'
                       : isSelected

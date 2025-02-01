@@ -63,7 +63,7 @@ export default function Home() {
         <div className=" bg-[#1B1B1B]  w-full flex-col sm:grid sm:grid-cols-2 sm:gap-2 1xl:gap-0 1xl:flex 1xl:flex-row  1xl:h-[21.5rem]  3xl:h-[calc(21.5rem*1.2)]  rounded-[10px] flex items-center justify-between px-4 xl:px-8 py-4 space-y-3 1xl:space-y-0 1xl:space-x-4 1xl:w-[calc(78rem*var(--scale-factor))] xl:w-[calc(68rem*var(--scale-factor))]">
           <ActivityTracker />
           <TotalTimeTrackerCard />
-          <CircularProgressCard total={10} completed={5.6} />
+          <CircularProgressCard />
           <VelocityTrackerCard />
         </div>
       </div>
