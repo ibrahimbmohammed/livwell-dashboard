@@ -20,7 +20,7 @@ function ProfileDropDown({ children, position = '-right-5' }: IProfileDropDownPr
 
   const logoutUser = () => {
     dispatch(clearDashboardSlicesAndLogoutUser());
-    router.replace('/auth/login');
+    router.replace('/dashboard');
   };
 
   return (
