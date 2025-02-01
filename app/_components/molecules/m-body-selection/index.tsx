@@ -2,7 +2,7 @@
 
 import { Tab } from '@headlessui/react';
 import Image from 'next/image';
-import HumanDummy from '@assets/png/HumanDummy.png';
+import HumanDummy from '@assets/webp/HumanDummy.webp';
 import BodyPositionIndicatorChest from '../m-body-position-chect';
 import BodyPositionIndicatorShoulder from '../m-body-position-shoulder';
 import BodyPositionIndicatorAbs from '../m-body-position-abs';
