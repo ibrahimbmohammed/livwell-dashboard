@@ -49,7 +49,7 @@ const VelocityTrackerCard = () => {
 
   if (isLoading) {
     return (
-      <div className="w-full 1xl:w-[12.5rem] 2xl:w-[calc(12.5rem*1.2)] 3xl:w-[calc(12.5rem*1.25)] 3xl:h-[calc(18.12rem*1.2)] h-[18.12rem] rounded-[10px] bg-[#252525] px-5 py-5 text-white flex items-center justify-center">
+      <div className="w-full 1xl:w-[12.5rem] 2xl:w-[calc(12.5rem*1.2)] 3xl:w-[calc(12.5rem*1.25)] 3xl:h-[calc(18.12rem*1.2)] h-[18.12rem] rounded-[10px] bg-[#252525] px-5 py-5 text-white flex ">
         <LoadingScreen />
       </div>
     );

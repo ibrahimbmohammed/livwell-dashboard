@@ -19,13 +19,13 @@ function BodySelection() {
     <div className="main w-full h-[23.25rem] md:h-[30rem] 1xl:h-[32.25rem] bg-[#1B1B1B] 1xl:w-[36.675rem] 3xl:w-[calc(38.675rem*1.14)] 3xl:h-[calc(32.25rem*1.2)] rounded-[10px] flex flex-col items-start justify-start z-10 my-3 1xl:my-0 ">
       <div className="w-full  px-2 py-0 sm:px-0">
         <Tab.Group>
-          <Tab.List className="flex space-x-1 rounded-xl bg-transparent mt-6 ml-6">
+          <Tab.List className="flex space-x-1 rounded-full bg-transparent mt-6 ml-6">
             {categories?.map((category) => (
               <Tab
                 key={category}
                 className={({ selected }) =>
                   classNames(
-                    'w-[4.7rem]  rounded-lg py-1.5  text-sm leading-6',
+                    'w-[4.7rem]  rounded-full py-1.5  text-sm leading-6',
                     'focus:outline-none ',
                     selected
                       ? 'bg-[#252525] rounded-full text-white font-[300] '
@@ -40,12 +40,12 @@ function BodySelection() {
             <div className="flex relative h-full">
               <div className="flex flex-col 1xl:space-y-8 h-[14rem] md:h-[22rem] 1xl:h-[25rem] 3xl:h-[calc(25rem*1.2)]  justify-end">
                 <div className="flex flex-col space-y-0">
-                  <p className="font-[200] text-[#ACACAC] text-[10px] 1xl:text-[12px]">Height</p>
-                  <p className="font-[550] text-white text-[12px] 1xl:text-[14px]">5ft 4inch</p>
+                  <p className="font-[200] text-[#ACACAC] text-[8px]  sm:text-[10px] 1xl:text-[12px]">Height</p>
+                  <p className="font-[550] text-white text-[10px] sm:text-[12px] 1xl:text-[14px]">5ft 4inch</p>
                 </div>
                 <div className="flex flex-col space-y-0">
-                  <p className="font-[200] text-[#ACACAC] text-[10px] 1xl:text-[12px]">Weight</p>
-                  <p className="font-[550] text-white text-[12px] 1xl:text-[14px]">120 lbs</p>
+                  <p className="font-[200] text-[#ACACAC] text-[8px]  sm:text-[10px] 1xl:text-[12px]">Weight</p>
+                  <p className="font-[550] text-white text-[10px] sm:text-[12px] 1xl:text-[14px]">120 lbs</p>
                 </div>
               </div>
             </div>

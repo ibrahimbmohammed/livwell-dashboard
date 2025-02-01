@@ -6,7 +6,7 @@ interface SpinnerIconProps {
 const SpinnerIcon = ({ className = ' ' }: SpinnerIconProps) => (
   <div className={`flex h-screen w-full items-center justify-center   ${className}`}>
     <span className="animate-spin">
-      <ImSpinner2 className="text-xl text-primaryColor" />
+      <ImSpinner2 className="text-xl text-secondaryColor" />
     </span>
   </div>
 );

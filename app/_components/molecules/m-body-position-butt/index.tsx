@@ -5,8 +5,11 @@ import ArrowHead from '@assets/png/livewell4.png';
 import ButtImage from '@assets/png/ButtImage.png';
 import Line from '@assets/png/livewell5.png';
 import Dot from '@assets/png/livewell1.png';
+import useWindowSize, { Size } from '@/app/_lib/hooks/useWindowSize';
 
 function BodyPositionIndicatorButt() {
+  const { width = 0 }: Size = useWindowSize();
+
   return (
     <Tab.Panel>
       <div className="absolute  top-[140px] left-[265px] sm:top-[180px] sm:left-[500px]   h-28 bg-transparent">
@@ -24,7 +27,10 @@ function BodyPositionIndicatorButt() {
               </div>
             </div>
           </div>
-          <div className="1xl:hidden  absolute top-0 left-0  xl:top-0 xl:-left-12">
+          <div
+            className={`1xl:hidden  absolute top-0 left-0  xl:top-0 xl:-left-12 ${
+              width < 400 ? '-left-[8px] -top-[15px]' : 'top-0 left-0 '
+            }`}>
             <div className="relative w-[4rem]  h-[4rem] ">
               <div className="absolute">
                 <Image src={ButtImage?.src} alt="arrow" width={60.7} height={14.5} />

@@ -5,8 +5,11 @@ import ArrowHead from '@assets/png/livewell4.png';
 import LegImage from '@assets/png/LegImage.png';
 import Line from '@assets/png/livewell5.png';
 import Dot from '@assets/png/livewell1.png';
+import useWindowSize from '@/app/_lib/hooks/screen-size';
+import { Size } from '@/app/_lib/hooks/useWindowSize';
 
 function BodyPositionIndicatorLegs() {
+  const { width = 0 }: Size = useWindowSize();
   return (
     <Tab.Panel>
       <div className="absolute top-[170px] left-[83px] sm:top-[220px] sm:left-[225px] h-28 bg-transparent">
@@ -24,7 +27,7 @@ function BodyPositionIndicatorLegs() {
               </div>
             </div>
           </div>
-          <div className="xl:hidden  absolute top-8 left-9 ">
+          <div className={`xl:hidden  absolute  ${width < 400 ? 'left-[24px]' : 'top-8 left-9'} `}>
             <div className="relative w-[7rem]  h-[4rem] ">
               <div className="absolute">
                 <Image src={LegImage?.src} alt="arrow" width={90.7} height={14.5} />
